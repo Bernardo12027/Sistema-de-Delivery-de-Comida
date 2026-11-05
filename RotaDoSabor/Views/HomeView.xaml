@@ -1,0 +1,33 @@
+<UserControl x:Class="RotaDoSabor.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Tela provisória pós-login. Aqui entrarão categorias, busca e restaurantes (itens do backlog). -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource CorSuperficie}"
+                BorderBrush="{StaticResource CorBorda}" BorderThickness="0,0,0,1" Padding="24,14">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Path Data="{StaticResource IconePin}" Fill="{StaticResource CorPrimaria}"
+                          Stretch="Uniform" Width="26" Height="26"/>
+                    <TextBlock Text="Rota do Sabor" FontSize="20" FontWeight="Bold"
+                               Foreground="{StaticResource CorTexto}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+
+                <Button Content="Sair" Style="{StaticResource BotaoSecundario}"
+                        Height="38" Width="90" FontSize="14" HorizontalAlignment="Right"
+                        Click="BtnSair_Click"/>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="480">
+            <TextBlock x:Name="TxtBoasVindas" Style="{StaticResource Titulo}" TextAlignment="Center"/>
+            <TextBlock Text="Login realizado com sucesso. Em breve: categorias, busca e restaurantes por aqui."
+                       Style="{StaticResource Subtitulo}" TextAlignment="Center" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

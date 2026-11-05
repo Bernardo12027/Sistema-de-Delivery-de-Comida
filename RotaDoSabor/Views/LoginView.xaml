@@ -1,0 +1,43 @@
+<UserControl x:Class="RotaDoSabor.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:componentes="clr-namespace:RotaDoSabor.Views.Components">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <componentes:PainelMarca Grid.Column="0"/>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="340" Margin="0,32">
+
+                <TextBlock Text="Entrar" Style="{StaticResource Titulo}"/>
+                <TextBlock Text="Use seu nome de usuário ou seu e-mail."
+                           Style="{StaticResource Subtitulo}" Margin="0,6,0,28"/>
+
+                <TextBlock Text="Usuário ou e-mail" Style="{StaticResource Rotulo}"/>
+                <TextBox x:Name="TxtIdentificador" Style="{StaticResource CampoTexto}" MaxLength="120"/>
+
+                <TextBlock Text="Senha" Style="{StaticResource Rotulo}" Margin="0,18,0,6"/>
+                <PasswordBox x:Name="TxtSenha" Style="{StaticResource CampoSenha}" MaxLength="64"/>
+
+                <Border x:Name="CaixaErro" Visibility="Collapsed" Background="{StaticResource CorErroFundo}"
+                        CornerRadius="8" Padding="12,10" Margin="0,18,0,0">
+                    <TextBlock x:Name="TxtErro" Style="{StaticResource TextoErro}"/>
+                </Border>
+
+                <Button x:Name="BtnConfirmar" Content="Confirmar" IsDefault="True"
+                        Style="{StaticResource BotaoPrimario}" Margin="0,24,0,0" Click="BtnConfirmar_Click"/>
+                <Button Content="Voltar" IsCancel="True"
+                        Style="{StaticResource BotaoLink}" Margin="0,10,0,0" Click="BtnVoltar_Click"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <TextBlock Text="Ainda não tem conta?" Style="{StaticResource Subtitulo}" VerticalAlignment="Center"/>
+                    <Button Content="Cadastre-se" Style="{StaticResource BotaoLink}" Click="BtnIrCadastro_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
