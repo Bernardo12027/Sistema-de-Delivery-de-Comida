@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Camada de infraestrutura: EF Core (DbContext, configurações Fluent API, Migrations, Seed),
+       repositórios, consulta SQL manual (ADO.NET) e hash de senha. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>RotaDoSabor.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O provider SQL Server já traz o Microsoft.Data.SqlClient usado na consulta ADO.NET manual. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RotaDoSabor.Application\RotaDoSabor.Application.csproj" />
+    <ProjectReference Include="..\RotaDoSabor.Domain\RotaDoSabor.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

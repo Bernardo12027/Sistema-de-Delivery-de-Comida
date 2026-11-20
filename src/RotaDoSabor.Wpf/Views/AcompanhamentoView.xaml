@@ -1,0 +1,42 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.AcompanhamentoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button x:Name="BtnAtualizar" Content="Atualizar" Click="BtnAtualizar_Click" />
+            <Button x:Name="BtnAvancar" Content="Avançar status (demo)" Click="BtnAvancar_Click" ToolTip="Simula a próxima etapa sem esperar o temporizador" />
+            <Button x:Name="BtnCancelar" Content="Cancelar pedido" Click="BtnCancelar_Click" />
+            <Button x:Name="BtnAvaliar" Content="Avaliar" Click="BtnAvaliar_Click" />
+            <Button x:Name="BtnRepetir" Content="Repetir pedido" Click="BtnRepetir_Click" />
+            <Button x:Name="BtnHistorico" Content="Histórico" Click="BtnHistorico_Click" />
+            <Button x:Name="BtnInicio" Content="Início" Click="BtnInicio_Click" />
+        </WrapPanel>
+
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock x:Name="TxtTitulo" Style="{StaticResource Titulo}" />
+            <TextBlock x:Name="TxtRestaurante" Style="{StaticResource Subtitulo}" />
+            <TextBlock x:Name="TxtData" />
+
+            <TextBlock Text="Status do pedido" Style="{StaticResource Subtitulo}" Margin="0,12,0,0" />
+            <TextBlock x:Name="TxtStatus" FontSize="20" FontWeight="Bold" />
+            <ProgressBar x:Name="BarraProgresso" Minimum="0" Maximum="100" Height="18" Margin="0,4" />
+            <TextBlock Text="PENDENTE  →  EM_PREPARO  →  SAIU_PARA_ENTREGA  →  ENTREGUE" Foreground="DimGray" />
+            <TextBlock x:Name="TxtTempo" Margin="0,6,0,0" />
+            <TextBlock Style="{StaticResource Dica}"
+                       Text="A tela atualiza sozinha a cada 3 segundos. Na demonstração cada etapa avança em poucos segundos (configurável no appsettings.json)." />
+
+            <TextBlock x:Name="TxtEndereco" TextWrapping="Wrap" Margin="0,6,0,0" />
+            <TextBlock x:Name="TxtPagamento" />
+            <TextBlock x:Name="TxtValores" FontWeight="SemiBold" Margin="0,4" />
+        </StackPanel>
+
+        <DataGrid x:Name="DgItens">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Produto" Binding="{Binding NomeProduto, Mode=OneWay}" Width="*" />
+                <DataGridTextColumn Header="Qtd" Binding="{Binding Quantidade, Mode=OneWay}" Width="50" />
+                <DataGridTextColumn Header="Preço na compra" Binding="{Binding PrecoUnitarioTexto, Mode=OneWay}" Width="120" />
+                <DataGridTextColumn Header="Subtotal" Binding="{Binding SubtotalTexto, Mode=OneWay}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

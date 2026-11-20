@@ -1,0 +1,26 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.PerfilView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel HorizontalAlignment="Center" Width="380">
+            <TextBlock Text="Configurações — meu perfil" Style="{StaticResource Titulo}" />
+            <Label Content="Nome *" />
+            <TextBox x:Name="TxtNome" MaxLength="100" />
+            <Label Content="Telefone (com DDD)" />
+            <TextBox x:Name="TxtTelefone" MaxLength="20" />
+            <Label Content="E-mail (não editável)" />
+            <TextBox x:Name="TxtEmail" IsReadOnly="True" Background="WhiteSmoke" />
+            <Label Content="Nome de usuário (não editável)" />
+            <TextBox x:Name="TxtUsuario" IsReadOnly="True" Background="WhiteSmoke" />
+            <TextBlock x:Name="TxtDesde" Style="{StaticResource Dica}" />
+            <Button x:Name="BtnSalvar" Content="Salvar alterações" Click="BtnSalvar_Click" FontWeight="Bold" />
+
+            <TextBlock Text="Minha conta" Style="{StaticResource Subtitulo}" Margin="0,16,0,4" />
+            <Button x:Name="BtnEnderecos" Content="Gerenciar endereços" Click="BtnEnderecos_Click" />
+            <Button x:Name="BtnCartoes" Content="Gerenciar cartões fictícios" Click="BtnCartoes_Click" />
+            <Button x:Name="BtnHistorico" Content="Histórico de pedidos" Click="BtnHistorico_Click" />
+            <Button x:Name="BtnSair" Content="Sair da conta" Click="BtnSair_Click" />
+            <Button x:Name="BtnVoltar" Content="Voltar" Click="BtnVoltar_Click" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

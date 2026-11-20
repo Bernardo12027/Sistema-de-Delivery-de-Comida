@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Authors>Grupo Rota do Sabor - UVV</Authors>
+    <Product>Rota do Sabor</Product>
+  </PropertyGroup>
+</Project>

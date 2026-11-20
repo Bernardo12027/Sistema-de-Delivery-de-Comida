@@ -1,0 +1,49 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.CartoesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="Meus cartões (fictícios)" Style="{StaticResource Titulo}" />
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="BtnVoltar" Content="Voltar" Click="BtnVoltar_Click" />
+        </StackPanel>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="340" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0">
+                <Button x:Name="BtnRemover" DockPanel.Dock="Bottom" Content="Remover cartão selecionado" HorizontalAlignment="Left" Click="BtnRemover_Click" />
+                <TextBlock x:Name="TxtVazio" DockPanel.Dock="Top" Text="Nenhum cartão cadastrado." Style="{StaticResource Dica}" Visibility="Collapsed" />
+                <ListBox x:Name="LstCartoes" DisplayMemberPath="Descricao" />
+            </DockPanel>
+
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Adicionar cartão" Style="{StaticResource Subtitulo}" />
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="RbDebito" Content="Débito" GroupName="TipoCartao" />
+                        <RadioButton x:Name="RbCredito" Content="Crédito" GroupName="TipoCartao" IsChecked="True" />
+                    </StackPanel>
+                    <Label Content="Número do cartão *" />
+                    <TextBox x:Name="TxtNumero" MaxLength="23" />
+                    <Label Content="Nome impresso *" />
+                    <TextBox x:Name="TxtNome" MaxLength="60" />
+                    <Label Content="Validade (MM/AA) *" />
+                    <TextBox x:Name="TxtValidade" MaxLength="5" />
+                    <Label Content="CVV *" />
+                    <PasswordBox x:Name="PwdCvv" MaxLength="4" />
+                    <Label Content="Apelido (opcional)" />
+                    <TextBox x:Name="TxtApelido" MaxLength="40" />
+                    <Button x:Name="BtnAdicionar" Content="Adicionar" Click="BtnAdicionar_Click" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource Dica}"
+                               Text="Segurança: apenas bandeira, últimos 4 dígitos, tipo e apelido são armazenados. Número completo, nome, validade e CVV NÃO são gravados. Nenhuma cobrança real é feita." />
+                    <TextBlock Style="{StaticResource Dica}"
+                               Text="Demonstração: um cartão terminado em 0000 tem o pagamento RECUSADO pela simulação." />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,72 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.FinalizacaoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="BtnVoltar" Content="Voltar" Click="BtnVoltar_Click" />
+            <Button x:Name="BtnConfirmar" Content="Confirmar pedido" Click="BtnConfirmar_Click" FontWeight="Bold" Height="34" />
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="Finalização do pedido" Style="{StaticResource Titulo}" />
+                <TextBlock x:Name="TxtRestaurante" Style="{StaticResource Subtitulo}" />
+                <ListBox x:Name="LstItens" MaxHeight="120" Margin="0,0,0,6">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Quantidade, Mode=OneWay}" />
+                                <Run Text="x" />
+                                <Run Text="{Binding NomeProduto, Mode=OneWay}" />
+                                <Run Text=" — " />
+                                <Run Text="{Binding SubtotalTexto, Mode=OneWay}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <GroupBox Header="Endereço de entrega">
+                    <StackPanel>
+                        <ComboBox x:Name="CmbEndereco" DisplayMemberPath="DescricaoComPadrao" />
+                        <Button x:Name="BtnEnderecos" Content="Gerenciar endereços" HorizontalAlignment="Left" Click="BtnEnderecos_Click" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Forma de pagamento (simulação — nenhuma cobrança real)">
+                    <StackPanel>
+                        <WrapPanel>
+                            <RadioButton x:Name="RbPix" Content="Pix" GroupName="Pagamento" Checked="FormaPagamento_Checked" />
+                            <RadioButton x:Name="RbCredito" Content="Cartão de crédito" GroupName="Pagamento" Checked="FormaPagamento_Checked" />
+                            <RadioButton x:Name="RbDebito" Content="Cartão de débito" GroupName="Pagamento" Checked="FormaPagamento_Checked" />
+                            <RadioButton x:Name="RbDinheiro" Content="Dinheiro (na entrega)" GroupName="Pagamento" Checked="FormaPagamento_Checked" />
+                        </WrapPanel>
+                        <Label x:Name="LblCartao" Content="Cartão" />
+                        <ComboBox x:Name="CmbCartao" DisplayMemberPath="Descricao" />
+                        <Button x:Name="BtnCartoes" Content="Gerenciar cartões" HorizontalAlignment="Left" Click="BtnCartoes_Click" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Cupom de desconto">
+                    <StackPanel>
+                        <DockPanel>
+                            <Button x:Name="BtnRemoverCupom" Content="Remover" DockPanel.Dock="Right" Click="BtnRemoverCupom_Click" Margin="4,2,0,8" />
+                            <Button x:Name="BtnAplicarCupom" Content="Aplicar" DockPanel.Dock="Right" Click="BtnAplicarCupom_Click" Margin="4,2,0,8" />
+                            <TextBox x:Name="TxtCupom" CharacterCasing="Upper" MaxLength="30" />
+                        </DockPanel>
+                        <TextBlock x:Name="TxtCupomInfo" Style="{StaticResource Dica}" Text="Cupons de demonstração: BEMVINDO10, ROTA20, SABOR50, GRATIS100 (válidos) e EXPIRADO15 (vencido)." />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Resumo">
+                    <StackPanel>
+                        <TextBlock x:Name="TxtSubtotal" />
+                        <TextBlock x:Name="TxtDesconto" />
+                        <TextBlock Text="Entrega: grátis" />
+                        <TextBlock x:Name="TxtTotal" FontSize="18" FontWeight="Bold" Margin="0,4" />
+                        <TextBlock x:Name="TxtTempo" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,71 @@
+@startuml RotaDoSabor_CasosDeUso
+' Diagrama de casos de uso ATUALIZADO. Casos marcados com (NOVO) são as funcionalidades pedidas pelo professor.
+left to right direction
+skinparam packageStyle rectangle
+title Rota do Sabor — Diagrama de Casos de Uso (atualizado)
+
+actor Cliente
+actor "Sistema de Pagamento\nSimulado" as Pagamento <<sistema>>
+
+rectangle "Rota do Sabor" {
+  usecase "Cadastrar-se" as UC01
+  usecase "Fazer login\n(usuário ou e-mail)" as UC02
+  usecase "Fazer logout" as UC03
+  usecase "Visualizar categorias\nde produto" as UC04
+  usecase "Buscar e filtrar\nrestaurantes/produtos" as UC05
+  usecase "Ver média de avaliação\ndo restaurante" as UC06
+  usecase "Visualizar cardápio" as UC07
+  usecase "Gerenciar carrinho\nde compras" as UC08
+  usecase "Finalizar pedido" as UC09
+  usecase "Selecionar endereço\nde entrega" as UC10
+  usecase "Realizar pagamento" as UC11
+  usecase "Aplicar cupom\nde desconto" as UC12
+  usecase "Acompanhar pedido" as UC13
+  usecase "Ver tempo estimado\nde preparo/entrega" as UC14
+  usecase "Gerenciar endereços" as UC15
+  usecase "Consultar histórico\nde pedidos" as UC16
+  usecase "Avaliar pedido" as UC17
+
+  usecase "Editar perfil\n(NOVO)" as N1
+  usecase "Gerenciar cartões\nfictícios (NOVO)" as N2
+  usecase "Cancelar pedido\npendente (NOVO)" as N3
+  usecase "Repetir pedido\nanterior (NOVO)" as N4
+  usecase "Definir endereço\npadrão (NOVO)" as N5
+}
+
+Cliente --> UC01
+Cliente --> UC02
+Cliente --> UC03
+Cliente --> UC04
+Cliente --> UC05
+Cliente --> UC06
+Cliente --> UC07
+Cliente --> UC08
+Cliente --> UC09
+Cliente --> UC13
+Cliente --> UC14
+Cliente --> UC15
+Cliente --> UC16
+Cliente --> N1
+Cliente --> N2
+
+UC09 ..> UC08 : <<include>>
+UC09 ..> UC10 : <<include>>
+UC09 ..> UC11 : <<include>>
+UC12 ..> UC09 : <<extend>>
+UC13 ..> UC14 : <<include>>
+UC17 ..> UC16 : <<extend>>
+N3 ..> UC13 : <<extend>>
+N4 ..> UC16 : <<extend>>
+N5 ..> UC15 : <<extend>>
+UC11 -- Pagamento
+
+note right of UC11
+  Pix, crédito, débito ou dinheiro.
+  Status: PENDENTE / APROVADO / RECUSADO.
+  Nenhuma integração financeira real.
+end note
+note bottom of N3
+  Somente enquanto o status for PENDENTE.
+end note
+@enduml

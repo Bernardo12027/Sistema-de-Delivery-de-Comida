@@ -1,0 +1,319 @@
+@startuml RotaDoSabor_Classes
+' Diagrama de classes ATUALIZADO — reflete o código de src/RotaDoSabor.Domain (entidades, enums, interface)
+' e as principais abstrações de Application/Infrastructure.
+' (+) NOVO = classe/método criado para as novas funcionalidades pedidas pelo professor.
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+title Rota do Sabor — Diagrama de Classes (atualizado)
+
+package "RotaDoSabor.Domain" {
+
+  class Cliente {
+    +Id : int
+    +Nome : string
+    +Email : string
+    +Telefone : string
+    +NomeUsuario : string
+    +SenhaHash : string
+    +DataCadastro : DateTime
+    +AtualizarPerfil(nome, telefone) : void  <<(+) NOVO>>
+    +{static} NormalizarEmail(email) : string
+    +{static} NormalizarNomeUsuario(nome) : string
+  }
+
+  class Categoria {
+    +Id : int
+    +Nome : string
+  }
+
+  class Restaurante {
+    +Id : int
+    +Nome : string
+    +Endereco : string
+    +Telefone : string
+    +AvaliacaoMedia : decimal
+    +QuantidadeAvaliacoes : int
+    +TempoEntregaMinutos : int
+    +CategoriaId : int
+    +RegistrarAvaliacao(nota : int) : void
+  }
+
+  abstract class Produto {
+    +Id : int
+    +Nome : string
+    +Descricao : string
+    +Preco : decimal
+    +Disponivel : bool
+    +CategoriaId : int
+    +RestauranteId : int
+    +{abstract} ObterTipo() : string
+    +{abstract} ObterDetalhes() : string
+    +AlterarDisponibilidade(disponivel : bool) : void
+  }
+
+  class Prato {
+    +TempoPreparo : int
+    +Tamanho : string
+    +Preparar() : string
+    +ObterTipo() : string
+    +ObterDetalhes() : string
+  }
+
+  class Bebida {
+    +Volume : int
+    +Tipo : string
+    +ObterTipo() : string
+    +ObterDetalhes() : string
+  }
+
+  interface IPreparacao <<interface>> {
+    +TempoPreparo : int
+    +Preparar() : string
+  }
+
+  class Pedido {
+    +Id : int
+    +DataHora : DateTime
+    +Status : StatusPedido
+    +Subtotal : decimal
+    +Desconto : decimal
+    +TaxaEntrega : decimal
+    +ValorTotal : decimal
+    +TempoEstimadoMinutos : int
+    +DataAtualizacaoStatus : DateTime
+    +RowVersion : byte[]
+    +ClienteId : int
+    +RestauranteId : int
+    +EnderecoId : int
+    +CupomId : int?
+    +AdicionarItem(produto : Produto, quantidade : int) : void
+    +AplicarCupom(cupom : Cupom, agora : DateTime) : void
+    +DefinirPagamento(pagamento : Pagamento) : void
+    +Cancelar(agora : DateTime) : void  <<(+) NOVO>>
+    +AvancarStatus(agora : DateTime) : void
+    +ObterProximoStatus() : StatusPedido?
+    +PodeSerCancelado() : bool
+    +EstaEmAndamento() : bool
+    +PodeSerAvaliado() : bool
+    +ObterPrevisaoEntrega() : DateTime
+  }
+
+  class ItemPedido {
+    +Id : int
+    +PedidoId : int
+    +ProdutoId : int
+    +NomeProduto : string
+    +Quantidade : int
+    +PrecoUnitario : decimal
+    +Subtotal : decimal
+  }
+
+  class Endereco {
+    +Id : int
+    +ClienteId : int
+    +Logradouro : string
+    +Numero : string
+    +Complemento : string?
+    +Bairro : string
+    +Cidade : string
+    +Cep : string
+    +Padrao : bool
+    +Ativo : bool
+    +Atualizar(...) : void
+    +DefinirComoPadrao() : void  <<(+) NOVO>>
+    +RemoverPadrao() : void
+    +Inativar() : void
+    +ObterDescricao() : string
+  }
+
+  class Pagamento {
+    +Id : int
+    +PedidoId : int
+    +Valor : decimal
+    +Forma : FormaPagamento
+    +Status : StatusPagamento
+    +DataPagamento : DateTime?
+    +CodigoTransacao : string?
+    +CartaoSimuladoId : int?
+    +Aprovar(data, codigo) : void
+    +Recusar(codigo) : void
+    +ConfirmarNaEntrega(data) : void
+    +Estornar() : void
+  }
+
+  class Cupom {
+    +Id : int
+    +Codigo : string
+    +Descricao : string
+    +PercentualDesconto : decimal
+    +DataValidade : DateTime
+    +Ativo : bool
+    +EstaValido(agora : DateTime) : bool
+    +CalcularDesconto(total : decimal) : decimal
+  }
+
+  class Avaliacao {
+    +Id : int
+    +PedidoId : int
+    +ClienteId : int
+    +RestauranteId : int
+    +Nota : int
+    +Comentario : string?
+    +DataAvaliacao : DateTime
+    +{static} ValidarNota(nota : int) : void
+  }
+
+  class CartaoSimulado <<(+) NOVO>> {
+    +Id : int
+    +ClienteId : int
+    +IdentificadorFicticio : string
+    +Bandeira : string
+    +UltimosDigitos : string
+    +Tipo : TipoCartao
+    +Apelido : string
+    +Ativo : bool
+    +DataCadastro : DateTime
+    +{static} Criar(clienteId, numeroDigitado, tipo, apelido, agora) : CartaoSimulado
+    +{static} IdentificarBandeira(digitos) : string
+    +AceitaForma(forma : FormaPagamento) : bool
+    +Inativar() : void
+  }
+
+  class Carrinho {
+    +RestauranteId : int?
+    +NomeRestaurante : string
+    +Total : decimal
+    +QuantidadeTotal : int
+    +EstaVazio : bool
+    +Adicionar(produto, nomeRestaurante, quantidade) : void
+    +Aumentar(produtoId) : void
+    +Diminuir(produtoId) : void
+    +AlterarQuantidade(produtoId, quantidade) : void
+    +Remover(produtoId) : void
+    +Limpar() : void
+    +PertenceAOutroRestaurante(restauranteId) : bool
+  }
+
+  class ItemCarrinho {
+    +ProdutoId : int
+    +NomeProduto : string
+    +PrecoUnitario : decimal
+    +Quantidade : int
+    +Subtotal : decimal
+  }
+
+  enum StatusPedido {
+    Pendente
+    EmPreparo
+    SaiuParaEntrega
+    Entregue
+    Cancelado
+  }
+
+  enum StatusPagamento {
+    Pendente
+    Aprovado
+    Recusado
+    Estornado
+  }
+
+  enum FormaPagamento {
+    Pix
+    CartaoCredito
+    CartaoDebito
+    Dinheiro
+  }
+
+  enum TipoCartao <<(+) NOVO>> {
+    Credito
+    Debito
+  }
+
+  ' Herança e interface
+  Produto <|-- Prato
+  Produto <|-- Bebida
+  IPreparacao <|.. Prato
+
+  ' Associações (multiplicidades conforme o banco)
+  Categoria "1" -- "0..*" Restaurante
+  Categoria "1" -- "0..*" Produto
+  Restaurante "1" o-- "0..*" Produto : cardápio
+  Cliente "1" *-- "0..*" Endereco
+  Cliente "1" *-- "0..*" CartaoSimulado
+  Cliente "1" -- "0..*" Pedido
+  Restaurante "1" -- "0..*" Pedido
+  Endereco "1" -- "0..*" Pedido : entrega
+  Cupom "0..1" -- "0..*" Pedido
+  Pedido "1" *-- "1..*" ItemPedido : composição
+  Produto "1" -- "0..*" ItemPedido
+  Pedido "1" *-- "1" Pagamento
+  CartaoSimulado "0..1" -- "0..*" Pagamento
+  Pedido "1" -- "0..1" Avaliacao
+  Cliente "1" -- "0..*" Avaliacao
+  Restaurante "1" -- "0..*" Avaliacao
+  Carrinho "1" *-- "0..*" ItemCarrinho
+
+  Pedido ..> StatusPedido
+  Pagamento ..> StatusPagamento
+  Pagamento ..> FormaPagamento
+  CartaoSimulado ..> TipoCartao
+}
+
+package "RotaDoSabor.Application" {
+  interface IPagamentoStrategy <<interface>> {
+    +Forma : FormaPagamento
+    +Processar(pagamento, cartao, agora) : void
+  }
+  class PixPagamentoStrategy
+  abstract class CartaoPagamentoStrategyBase
+  class CartaoCreditoPagamentoStrategy
+  class CartaoDebitoPagamentoStrategy
+  class DinheiroPagamentoStrategy
+  interface IProcessadorPagamento <<interface>> {
+    +Processar(pagamento, cartao) : void
+  }
+  class ProcessadorPagamentoSimulado
+  interface ISimuladorStatusPedido <<interface>> {
+    +ProcessarPedidosAsync() : Task<int>
+    +AvancarManualmenteAsync(clienteId, pedidoId) : Task<StatusPedido>
+    +ExecutarEmSegundoPlanoAsync(token) : Task
+  }
+  class SimuladorStatusPedidoService
+  interface ICheckoutService <<interface>>
+  interface IPedidoService <<interface>>
+  interface IPedidoRepository <<interface>>
+  interface IHistoricoPedidoConsulta <<interface>>
+
+  IPagamentoStrategy <|.. PixPagamentoStrategy
+  IPagamentoStrategy <|.. CartaoPagamentoStrategyBase
+  CartaoPagamentoStrategyBase <|-- CartaoCreditoPagamentoStrategy
+  CartaoPagamentoStrategyBase <|-- CartaoDebitoPagamentoStrategy
+  IPagamentoStrategy <|.. DinheiroPagamentoStrategy
+  IProcessadorPagamento <|.. ProcessadorPagamentoSimulado
+  ProcessadorPagamentoSimulado o-- "1..*" IPagamentoStrategy
+  ISimuladorStatusPedido <|.. SimuladorStatusPedidoService
+  SimuladorStatusPedidoService --> IPedidoRepository
+  ICheckoutService ..> IProcessadorPagamento
+}
+
+package "RotaDoSabor.Infrastructure" {
+  class RotaDoSaborDbContext
+  class PedidoRepository
+  class HistoricoPedidoSqlRepository <<SQL manual / ADO.NET>>
+  IPedidoRepository <|.. PedidoRepository
+  IHistoricoPedidoConsulta <|.. HistoricoPedidoSqlRepository
+  PedidoRepository --> RotaDoSaborDbContext
+}
+
+note bottom of CartaoSimulado
+  Não armazena número completo, nome impresso,
+  validade nem CVV — apenas bandeira e 4 últimos dígitos.
+end note
+
+note right of Pedido
+  Cancelar(): somente PENDENTE.
+  AvancarStatus(): PENDENTE → EM_PREPARO →
+  SAIU_PARA_ENTREGA → ENTREGUE (cancelado não avança).
+end note
+@enduml

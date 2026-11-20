@@ -1,0 +1,41 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.CarrinhoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Carrinho" Style="{StaticResource Titulo}" />
+            <TextBlock x:Name="TxtRestaurante" Style="{StaticResource Subtitulo}" />
+            <TextBlock x:Name="TxtVazio" Text="Seu carrinho está vazio." Style="{StaticResource Dica}" Visibility="Collapsed" />
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBlock Text="Entrega: grátis" HorizontalAlignment="Right" />
+            <TextBlock x:Name="TxtTotal" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,4" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="BtnContinuar" Content="Continuar comprando" Click="BtnContinuar_Click" />
+                <Button x:Name="BtnLimpar" Content="Limpar carrinho" Click="BtnLimpar_Click" />
+                <Button x:Name="BtnFinalizar" Content="Confirmar pedido" Click="BtnFinalizar_Click" FontWeight="Bold" />
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid x:Name="DgItens">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Produto" Binding="{Binding NomeProduto, Mode=OneWay}" Width="*" />
+                <DataGridTextColumn Header="Preço unit." Binding="{Binding PrecoUnitarioTexto, Mode=OneWay}" Width="100" />
+                <DataGridTextColumn Header="Qtd" Binding="{Binding Quantidade, Mode=OneWay}" Width="50" />
+                <DataGridTextColumn Header="Subtotal" Binding="{Binding SubtotalTexto, Mode=OneWay}" Width="100" />
+                <DataGridTemplateColumn Header="Ações" Width="230">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="−" Tag="{Binding ProdutoId}" Click="BtnDiminuir_Click" MinWidth="32" Margin="2" Padding="4,0" />
+                                <Button Content="+" Tag="{Binding ProdutoId}" Click="BtnAumentar_Click" MinWidth="32" Margin="2" Padding="4,0" />
+                                <Button Content="Remover" Tag="{Binding ProdutoId}" Click="BtnRemover_Click" MinWidth="0" Margin="2" Padding="6,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

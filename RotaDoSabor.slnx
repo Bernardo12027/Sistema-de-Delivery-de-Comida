@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RotaDoSabor.Domain/RotaDoSabor.Domain.csproj" />
+    <Project Path="src/RotaDoSabor.Application/RotaDoSabor.Application.csproj" />
+    <Project Path="src/RotaDoSabor.Infrastructure/RotaDoSabor.Infrastructure.csproj" />
+    <Project Path="src/RotaDoSabor.Wpf/RotaDoSabor.Wpf.csproj" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="README.md" />
+    <File Path="docs/ARQUITETURA.md" />
+    <File Path="docs/ROTEIRO_APRESENTACAO.md" />
+    <File Path="docs/VALIDACAO.md" />
+    <File Path="docs/diagramas/diagrama-classes.puml" />
+    <File Path="docs/diagramas/diagrama-casos-de-uso.puml" />
+    <File Path="docs/diagramas/diagramas-mermaid.md" />
+    <File Path="docs/sql/consulta-historico-pedidos.sql" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path=".gitignore" />
+  </Folder>
+</Solution>

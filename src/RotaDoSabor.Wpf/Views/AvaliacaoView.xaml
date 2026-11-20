@@ -1,0 +1,27 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.AvaliacaoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel HorizontalAlignment="Center" Width="460">
+        <TextBlock x:Name="TxtTitulo" Text="Avaliação" Style="{StaticResource Titulo}" />
+        <TextBlock x:Name="TxtRestaurante" Style="{StaticResource Subtitulo}" />
+        <TextBlock x:Name="TxtBloqueio" Foreground="DarkRed" TextWrapping="Wrap" Visibility="Collapsed" />
+
+        <Label Content="Nota" />
+        <StackPanel x:Name="PainelEstrelas" Orientation="Horizontal">
+            <RadioButton x:Name="RbNota1" Content="★" GroupName="Nota" Tag="1" FontSize="18" />
+            <RadioButton x:Name="RbNota2" Content="★★" GroupName="Nota" Tag="2" FontSize="18" />
+            <RadioButton x:Name="RbNota3" Content="★★★" GroupName="Nota" Tag="3" FontSize="18" />
+            <RadioButton x:Name="RbNota4" Content="★★★★" GroupName="Nota" Tag="4" FontSize="18" />
+            <RadioButton x:Name="RbNota5" Content="★★★★★" GroupName="Nota" Tag="5" FontSize="18" />
+        </StackPanel>
+
+        <Label Content="Descrição (opcional, até 500 caracteres)" />
+        <TextBox x:Name="TxtComentario" Height="120" AcceptsReturn="True" TextWrapping="Wrap" MaxLength="500"
+                 VerticalScrollBarVisibility="Auto" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="BtnVoltar" Content="Voltar" Click="BtnVoltar_Click" />
+            <Button x:Name="BtnConfirmar" Content="Confirmar" Click="BtnConfirmar_Click" FontWeight="Bold" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

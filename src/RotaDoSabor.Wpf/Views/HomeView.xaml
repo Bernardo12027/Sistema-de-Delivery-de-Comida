@@ -1,0 +1,50 @@
+<UserControl x:Class="RotaDoSabor.Wpf.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <!-- Cabeçalho: menu, logo e carrinho (como no protótipo) -->
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+            <Button x:Name="BtnMenu" Content="☰ Menu" DockPanel.Dock="Left" Click="BtnMenu_Click" />
+            <Button x:Name="BtnCarrinho" Content="Carrinho (0)" DockPanel.Dock="Right" Click="BtnCarrinho_Click" />
+            <TextBlock Text="Rota do Sabor" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </DockPanel>
+
+        <!-- Menu lateral -->
+        <Border x:Name="PainelMenu" DockPanel.Dock="Left" Width="210" BorderBrush="Gray" BorderThickness="0,0,1,0"
+                Padding="0,0,8,0" Margin="0,0,12,0" Visibility="Collapsed">
+            <StackPanel>
+                <TextBlock Text="Menu" Style="{StaticResource Subtitulo}" />
+                <Button x:Name="BtnEnderecos" Content="Meus endereços" Click="BtnEnderecos_Click" HorizontalContentAlignment="Left" />
+                <Button x:Name="BtnCartoes" Content="Meus cartões" Click="BtnCartoes_Click" HorizontalContentAlignment="Left" />
+                <Button x:Name="BtnHistorico" Content="Histórico de pedidos" Click="BtnHistorico_Click" HorizontalContentAlignment="Left" />
+                <Button x:Name="BtnPerfil" Content="Configurações / Perfil" Click="BtnPerfil_Click" HorizontalContentAlignment="Left" />
+                <Button x:Name="BtnSair" Content="Sair" Click="BtnSair_Click" HorizontalContentAlignment="Left" />
+            </StackPanel>
+        </Border>
+
+        <StackPanel>
+            <TextBlock x:Name="TxtSaudacao" Style="{StaticResource Subtitulo}" />
+
+            <Label Content="Pesquisar restaurante ou prato" />
+            <DockPanel>
+                <Button x:Name="BtnPesquisar" Content="Pesquisar" DockPanel.Dock="Right" IsDefault="True" Click="BtnPesquisar_Click" Margin="4,2,0,8" />
+                <TextBox x:Name="TxtPesquisa" />
+            </DockPanel>
+
+            <TextBlock Text="Categorias" Style="{StaticResource Subtitulo}" Margin="0,12,0,4" />
+            <ItemsControl x:Name="ListaCategorias">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Nome}" Tag="{Binding Id}" Height="60" FontSize="15" Click="BtnCategoria_Click" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button x:Name="BtnTodos" Content="Todos os restaurantes" Height="44" FontSize="15" Click="BtnTodos_Click" />
+        </StackPanel>
+    </DockPanel>
+</UserControl>
